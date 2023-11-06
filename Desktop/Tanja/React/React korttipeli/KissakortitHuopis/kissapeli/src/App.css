@@ -1,0 +1,28 @@
+h1{
+    color: greenyellow;
+    text-align: center;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 15px 2px rgb(29, 41, 29);
+    font-style: italic;
+    font-family:'Times New Roman', Times, serif;
+    text-transform: uppercase;
+}
+
+.card {
+    width: 120px;
+    height: 200px;
+    border: 2px solid rgb(29, 180, 133);
+    border-radius: 8px;
+    box-shadow: 1px 1px 4px 1px rgb(1, 52, 31);
+    background-color: rgb(165, 244, 236);
+}
+
+.kissanominaisuus {
+    display: flex;
+    justify-content: space-between;
+}
+
+.kissalista {
+    margin: 0;
+    padding: 0 8px;
+}
