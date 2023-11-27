@@ -1,31 +1,42 @@
 import './App.css';
 import Card from './components/Card';
+import { useState } from 'react';
 
 
-// const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
-const pelaajanKissa = Math.floor(Math.random() * (8 - 0 + 1) + 0);
-const pelaajankortti = {
-    image: 'http://placekitten.com/120/100?image=' + pelaajanKissa,
+const kortti = (index) => ({
+    image: 'http://placekitten.com/120/100?image=' + index,
     ominaisuudet: [
-        {name: 'cuteness', value: 10},
-        {name: 'loving', value: 200},
-        {name: 'speed', value: 15},
+        {name: 'cuteness', value: getRandomInt(1,10)},
+        {name: 'loving', value: getRandomInt(1,20)},
+        {name: 'speed', value: getRandomInt(1,15)},
     ],
-};
+});
 
-const vastustajanKissa = Math.floor(Math.random() * (16 - 9 + 1) + 9);
-const vastustajankortti = {
-    image: 'http://placekitten.com/120/100?image=' + vastustajanKissa,
-    ominaisuudet: [
-        {name: 'cuteness', value: 100},
-        {name: 'loving', value: 20},
-        {name: 'speed', value: 55},
-    ],
-};
+// luodaan 16 kortin korttipakka
+const korttipakka = Array(16).fill(null).map((_,index)=>kortti(index));
+console.log(korttipakka);
+
+// etsitään korttipakan puoliväli
+const puolivali = Math.ceil(korttipakka.length / 2);
+
+// jaetaan kortit
+const jaaKortit = () => ({
+    pelaaja: korttipakka.slice(0, puolivali),
+    vastustaja: korttipakka.slice(puolivali)
+});
+
+console.log(jaaKortit);
+
+const pelaajankortti = korttipakka[0];
+const vastustajankortti = korttipakka[1];
+
 
 
 export default function App() {
+
+    const [result, setResult] = useState('');
 
     function compareCards() {
         console.log('Button clicked');
@@ -33,12 +44,13 @@ export default function App() {
         const pelaajanStatus = pelaajankortti.ominaisuudet[0];
         const vastustajanStatus = vastustajankortti.ominaisuudet[0];
 
-        let result = '';
+        //let result = '';
 
-        if (pelaajanStatus.value === vastustajanStatus.value) result = 'tasapeli';
-        else if (pelaajanStatus.value > vastustajanStatus.value) result = 'voitto';
-        else result = 'häviö';
+        if (pelaajanStatus.value === vastustajanStatus.value) setResult('tasapeli');
+        else if (pelaajanStatus.value > vastustajanStatus.value) setResult('voitto');
+        else setResult('häviö');
 
+        // näyttää vanhaa tietoa
         console.log(result);
     }
 
@@ -46,13 +58,22 @@ export default function App() {
         <>
             <h1> Kissakorttipeli </h1>
 
-            <p> Pelaajan kortti </p>
-            <Card card={pelaajankortti}/>
+            <div className='pelialue'>
 
-            <button onClick={compareCards} type="button"> Vertaa </button>
+                <div>
+                    <p> Pelaajan kortti </p>
+                    <Card card={pelaajankortti}/>
+                </div>
 
-            <p> Vastustajan kortti</p>
-            <Card card={vastustajankortti}/>
+                <button onClick={compareCards} type="button" className='playButton'> Vertaa </button>
+                <p> { result } </p>
+
+                <div>
+                    <p> Vastustajan kortti</p>
+                    <Card card={vastustajankortti}/>
+                </div>
+
+            </div>
         </>
     );
 }

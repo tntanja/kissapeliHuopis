@@ -26,3 +26,18 @@ h1{
     margin: 0;
     padding: 0 8px;
 }
+
+.pelialue {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.playButton {
+    width: 80px;
+    height: 40px;
+    align-self: center;
+    font-size: larger;
+    font-weight: bold;
+    margin: 30px;
+}
