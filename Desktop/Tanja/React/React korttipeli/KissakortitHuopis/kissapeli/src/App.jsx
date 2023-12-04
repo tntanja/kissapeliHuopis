@@ -22,12 +22,24 @@ console.log(korttipakka);
 const puolivali = Math.ceil(korttipakka.length / 2);
 
 // jaetaan kortit
-const jaaKortit = () => ({
-    pelaaja: korttipakka.slice(0, puolivali),
-    vastustaja: korttipakka.slice(puolivali)
-});
+function jaaKortit() {
+    shuffle(korttipakka);
+    return {
+        pelaaja: korttipakka.slice(0, puolivali),
+        vastustaja: korttipakka.slice(puolivali)
+    }
+};
 
-console.log(jaaKortit);
+console.log(jaaKortit());
+
+// Fisher-Yates shuffle valmis koodi
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
 
 const pelaajankortti = korttipakka[0];
 const vastustajankortti = korttipakka[1];
@@ -37,6 +49,7 @@ const vastustajankortti = korttipakka[1];
 export default function App() {
 
     const [result, setResult] = useState('');
+    const [kortit, setKortit] = useState(jaaKortit)
 
     function compareCards() {
         console.log('Button clicked');
@@ -62,7 +75,9 @@ export default function App() {
 
                 <div>
                     <p> Pelaajan kortti </p>
-                    <Card card={pelaajankortti}/>
+                    {kortit.pelaaja.map(pelaajankortti => (
+                        <Card card={pelaajankortti}/>
+                    ))}
                 </div>
 
                 <button onClick={compareCards} type="button" className='playButton'> Vertaa </button>
@@ -70,7 +85,9 @@ export default function App() {
 
                 <div>
                     <p> Vastustajan kortti</p>
-                    <Card card={vastustajankortti}/>
+                    {kortit.vastustaja.map(vastustajankortti => (
+                        <Card card={vastustajankortti}/>
+                    ))}
                 </div>
 
             </div>
