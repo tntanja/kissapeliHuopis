@@ -12,6 +12,8 @@ const kortti = (index) => ({
         {name: 'loving', value: getRandomInt(1,20)},
         {name: 'speed', value: getRandomInt(1,15)},
     ],
+
+    id: crypto.randomUUID(),
 });
 
 // luodaan 16 kortin korttipakka
@@ -49,7 +51,7 @@ const vastustajankortti = korttipakka[1];
 export default function App() {
 
     const [result, setResult] = useState('');
-    const [kortit, setKortit] = useState(jaaKortit)
+    const [kortit, setKortit] = useState(jaaKortit);
 
     function compareCards() {
         console.log('Button clicked');
@@ -75,9 +77,13 @@ export default function App() {
 
                 <div>
                     <p> Pelaajan kortti </p>
-                    {kortit.pelaaja.map(pelaajankortti => (
-                        <Card card={pelaajankortti}/>
-                    ))}
+                    <ul className='korttirivi'>
+                        {kortit.pelaaja.map(pelaajankortti => (
+                            <li className='korttirivi-pelaaja' key={pelaajankortti.id}> 
+                                <Card card={pelaajankortti}/>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
 
                 <button onClick={compareCards} type="button" className='playButton'> Vertaa </button>
@@ -85,9 +91,13 @@ export default function App() {
 
                 <div>
                     <p> Vastustajan kortti</p>
-                    {kortit.vastustaja.map(vastustajankortti => (
-                        <Card card={vastustajankortti}/>
-                    ))}
+                    <ul className='korttirivi vastustaja'>
+                        {kortit.vastustaja.map(vastustajankortti => (
+                            <li className='korttirivi-vastustaja' key={vastustajankortti.id}> 
+                                <Card card={vastustajankortti}/>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
 
             </div>

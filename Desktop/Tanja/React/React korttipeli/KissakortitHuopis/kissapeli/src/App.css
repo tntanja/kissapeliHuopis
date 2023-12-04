@@ -41,3 +41,20 @@ h1{
     font-weight: bold;
     margin: 30px;
 }
+
+.korttirivi {
+    display: flex;
+}
+
+.korttirivi.vastustaja{
+    direction: rtl;
+}
+
+.korttirivi-pelaaja {
+    margin: 0 0 0 calc(6vw - 150px);
+}
+
+.korttirivi-vastustaja{
+    margin: 0 calc(6vw - 150px) 0 0;
+    direction: ltr;
+}
